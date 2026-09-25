@@ -12,17 +12,20 @@ app.use(cors());
 app.use(express.json());
 
 // MySQL connection pool
-const db = mysql.createPool({
-  host: process.env.MYSQLHOST || "localhost",
-  port: process.env.MYSQLPORT || 3306,
-  user: process.env.MYSQLUSER || "root",
-  password:
-    process.env.MYSQLPASSWORD ||
-    process.env.DB_PASSWORD ||
-    "YOUR_MYSQL_PASSWORD",
-  database:
-    process.env.MYSQLDATABASE ||
-    "support_ticket_system",
+const db = process.env.MYSQL_PUBLIC_URL
+  ? mysql.createPool(process.env.MYSQL_PUBLIC_URL)
+  : mysql.createPool({
+      host: process.env.MYSQLHOST || "localhost",
+      port: process.env.MYSQLPORT || 3306,
+      user: process.env.MYSQLUSER || "root",
+      password:
+        process.env.MYSQLPASSWORD ||
+        process.env.DB_PASSWORD ||
+        "YOUR_MYSQL_PASSWORD",
+      database:
+        process.env.MYSQLDATABASE ||
+        "support_ticket_system",
+    });
 });
 // JWT secret
 const JWT_SECRET =
