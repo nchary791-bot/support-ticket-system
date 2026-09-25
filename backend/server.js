@@ -13,15 +13,17 @@ app.use(express.json());
 
 // MySQL connection pool
 const db = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: process.env.DB_PASSWORD || "YOUR_MYSQL_PASSWORD",
-  database: "support_ticket_system",
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+  host: process.env.MYSQLHOST || "localhost",
+  port: process.env.MYSQLPORT || 3306,
+  user: process.env.MYSQLUSER || "root",
+  password:
+    process.env.MYSQLPASSWORD ||
+    process.env.DB_PASSWORD ||
+    "YOUR_MYSQL_PASSWORD",
+  database:
+    process.env.MYSQLDATABASE ||
+    "support_ticket_system",
 });
-
 // JWT secret
 const JWT_SECRET =
   process.env.JWT_SECRET || "support-ticket-system-secret";
