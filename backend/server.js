@@ -30,13 +30,26 @@ const JWT_SECRET =
 
 // Test database connection
 async function testDatabaseConnection() {
+  console.log("Database configuration:", {
+    host: process.env.MYSQLHOST,
+    port: process.env.MYSQLPORT,
+    user: process.env.MYSQLUSER,
+    database: process.env.MYSQLDATABASE,
+    hasPassword: Boolean(process.env.MYSQLPASSWORD),
+  });
+
   try {
     const connection = await db.getConnection();
+
     console.log("MySQL database connected successfully.");
+
     connection.release();
   } catch (error) {
-    console.error("MySQL connection failed:");
-    console.error(error.message);
+    console.error("MySQL connection failed.");
+    console.error("Error code:", error.code);
+    console.error("Error message:", error.message);
+    console.error("Error errno:", error.errno);
+    console.error("Error sqlState:", error.sqlState);
   }
 }
 
