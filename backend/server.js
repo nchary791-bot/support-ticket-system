@@ -26,7 +26,6 @@ const db = process.env.MYSQL_PUBLIC_URL
         process.env.MYSQLDATABASE ||
         "support_ticket_system",
     });
-});
 // JWT secret
 const JWT_SECRET =
   process.env.JWT_SECRET || "support-ticket-system-secret";
